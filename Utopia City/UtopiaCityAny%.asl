@@ -13,7 +13,7 @@ isLoading
 }
 split
 {
-    if((current.artefactCount > old.artefactCount) && old.isLoading == false|| current.gameState == 65536){
+    if((current.artefactCount > old.artefactCount) && old.gameState != 256|| current.gameState == 65536){
         return true;
     } 
 }
