@@ -12,6 +12,8 @@ init{
 }
 isLoading
 {
+    print("ending: " + ((current.inEndingScreen == 1801609066 && vars.inLevelEnd == 0)).ToString());
+    print("Level: " + ((current.inControl == true) && vars.loading == 0)).ToString());
     if(current.gameState == 257){
         vars.inLevelEnd = 0;
         return true;
@@ -22,7 +24,7 @@ isLoading
 }
 split
 {
-    if((current.inEndingScreen == 1801609066 && vars.inLevelEnd == 0) || current.level != old.level && (current.inControl == true) && vars.loading == 0){
+    if((current.inEndingScreen == 1801609066 && vars.inLevelEnd == 0) || (current.level != old.level && (current.inControl == true) && vars.loading == 0)){
         vars.inLevelEnd = 1;
         vars.loading = 1;
         return true;
