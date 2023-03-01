@@ -2,7 +2,6 @@ state("Liquidator2Launcher")
 {
     int gameState : "TMKernel.dll", 0x14895C;
     bool inControl: "TMGameLoader.dll", 0x5FF00;
-    bool levelSelect : "TMD3DGil.dll", 0x163B38;
     int level : "TMRtl.dll", 0x1993C8;
     int inEndingScreen : "TMRtl.dll", 0x183B38; //When in ending screen it's 1801609066
 }
@@ -32,7 +31,7 @@ split
 
 start
 {
-    if(old.levelSelect == true && current.levelSelect == false){
+    if(old.gameState == 65537 && current.gameState == 1){
         return true;
     }
 }
