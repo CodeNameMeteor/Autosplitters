@@ -2,6 +2,7 @@ state("Liquidator2Launcher")
 {
     int gameState : "TMKernel.dll", 0x14895C;
     bool inControl: "TMGameLoader.dll", 0x5FF00;
+    bool levelSelect : TMD3DGil.dll", 0x163B38;
     int level : "TMRtl.dll", 0x1993C8;
     int inEndingScreen : "TMRtl.dll", 0x183B38; //When in ending screen it's 1801609066
 }
@@ -12,8 +13,7 @@ init{
 }
 isLoading
 {
-    print("ending: " + ((current.inEndingScreen == 1801609066 && vars.inLevelEnd == 0)).ToString());
-    print("Level: " + ((current.inControl == true) && vars.loading == 0)).ToString());
+    print((current.level != old.level).ToString());
     if(current.gameState == 257){
         vars.inLevelEnd = 0;
         return true;
@@ -24,7 +24,7 @@ isLoading
 }
 split
 {
-    if((current.inEndingScreen == 1801609066 && vars.inLevelEnd == 0) || (current.level != old.level && (current.inControl == true) && vars.loading == 0)){
+    if((current.inEndingScreen == 1801609066 && vars.inLevelEnd == 0 && current.inControl == false) || (current.level != old.level && (current.inControl == true) && vars.loading == 0)){
         vars.inLevelEnd = 1;
         vars.loading = 1;
         return true;
