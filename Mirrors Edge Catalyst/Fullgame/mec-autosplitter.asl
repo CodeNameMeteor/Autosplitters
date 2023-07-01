@@ -25,6 +25,7 @@ init {
     vars.pxTrain = false;
     vars.shardTrain = false;
 	vars.shardCounter = 0;
+	vars.timerStarted = false;
 }
 startup
 {
@@ -49,9 +50,21 @@ startup
 }
 update {
 	if (current.mission == 35) {
-		vars.icarusWalk = current.canShift ? false : current.inCutscene && !old.inCutscene && vars.inReleaseIntro ? true : vars.icarusWalk;
-		vars.icarusWalk = current.health == 0 ? false : vars.icarusWalk;
-		vars.inReleaseIntro = current.canShift ? false : current.inCutscene && vars.inReleaseIntro == false ? true : vars.inReleaseIntro;
+		//vars.icarusWalk = current.canShift ? false : current.inCutscene && !old.inCutscene && vars.inReleaseIntro ? true : vars.icarusWalk;
+		//vars.icarusWalk = current.health == 0 ? false : vars.icarusWalk;
+		if(current.canShift){
+			vars.icarusWalk = false;
+			vars.inReleaseIntro = false;
+		}else if(current.inCutscene && !old.inCutscene && vars.inReleaseIntro){
+			vars.icarusWalk = true;
+		}
+		if(current.health == 0){
+			vars.icarusWalk = false;
+		}
+		if(current.inCutscene && !vars.inReleaseIntro){
+			vars.inReleaseIntro = true;
+		}
+		//vars.inReleaseIntro = current.canShift ? false : current.inCutscene && vars.inReleaseIntro == false ? true : vars.inReleaseIntro;
 	} else {
 		vars.inReleaseIntro = false;
 		vars.icarusWalk = false;
@@ -83,15 +96,24 @@ split {
 }
 start {
 	if (current.mission == 35 && !current.inCutscene && old.inCutscene) return true;
-	if (current.mission != old.mission && (old.mission == 0 || current.mission != 0 || current.mission != 35)) return true;
+	if (current.mission != old.mission && (old.mission == 0 && current.mission != 0 && current.mission != 35)) return true;
 }
 isLoading {
 	return current.loading || vars.icarusWalk || vars.vTol || vars.pxTrain || vars.shardTrain;
+}
+reset
+{
+	if(current.mission == 35 && old.mission == 0 && vars.timerStarted == true) return true;
 }
 onStart
 {
     // This makes sure the timer always starts at 0.00
     timer.IsGameTimePaused = true;
+	vars.timerStarted = true;
+}
+onReset
+{
+	vars.timerStarted = false;
 }
 exit
 {
