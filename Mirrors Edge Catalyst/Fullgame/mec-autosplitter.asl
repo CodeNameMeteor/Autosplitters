@@ -50,21 +50,9 @@ startup
 }
 update {
 	if (current.mission == 35) {
-		//vars.icarusWalk = current.canShift ? false : current.inCutscene && !old.inCutscene && vars.inReleaseIntro ? true : vars.icarusWalk;
-		//vars.icarusWalk = current.health == 0 ? false : vars.icarusWalk;
-		if(current.canShift){
-			vars.icarusWalk = false;
-			vars.inReleaseIntro = false;
-		}else if(current.inCutscene && !old.inCutscene && vars.inReleaseIntro){
-			vars.icarusWalk = true;
-		}
-		if(current.health == 0){
-			vars.icarusWalk = false;
-		}
-		if(current.inCutscene && !vars.inReleaseIntro){
-			vars.inReleaseIntro = true;
-		}
-		//vars.inReleaseIntro = current.canShift ? false : current.inCutscene && vars.inReleaseIntro == false ? true : vars.inReleaseIntro;
+		vars.icarusWalk = current.canShift ? false : current.inCutscene && !old.inCutscene && vars.inReleaseIntro ? true : vars.icarusWalk;
+		vars.icarusWalk = current.health == 0 ? false : vars.icarusWalk;
+		vars.inReleaseIntro = current.canShift ? false : current.inCutscene && vars.inReleaseIntro == false ? true : vars.inReleaseIntro;
 	} else {
 		vars.inReleaseIntro = false;
 		vars.icarusWalk = false;
