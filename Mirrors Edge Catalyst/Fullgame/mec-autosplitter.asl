@@ -26,6 +26,7 @@ init {
     vars.shardTrain = false;
 	vars.shardCounter = 0;
 	vars.timerStarted = false;
+	vars.splits = 1;
 }
 startup
 {
@@ -78,8 +79,14 @@ update {
 	}
 }
 split {
-	if (current.endBanner == 154 && old.endBanner != 154) return true;
-	if (old.y > 1400 && current.y < 100 && current.y > 10) return true; //The Shard
+	if (current.endBanner == 154 && old.endBanner != 154){
+		vars.splits++;
+		return true;
+	} 
+	if (old.y > 1400 && current.y < 100 && current.y > 10){
+		vars.splits++;
+		return true; //The Shard
+	} 
 	return false;
 }
 start {
@@ -91,7 +98,7 @@ isLoading {
 }
 reset
 {
-	if(current.mission == 35 && old.mission == 0 && vars.timerStarted == true) return true;
+	if(current.mission == 35 && old.mission == 0 && vars.timerStarted == true && vars.splits == 1) return true;
 }
 onStart
 {
@@ -102,6 +109,7 @@ onStart
 onReset
 {
 	vars.timerStarted = false;
+	vars.splits = 1;
 }
 exit
 {
