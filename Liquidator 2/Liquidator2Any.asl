@@ -12,7 +12,6 @@ init{
 }
 isLoading
 {
-    print((current.level != old.level).ToString());
     if(current.gameState == 257){
         vars.inLevelEnd = 0;
         return true;
