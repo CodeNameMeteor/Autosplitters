@@ -94,10 +94,19 @@ startup
 }
 split
 {
-    foreach (KeyValuePair<string, int> checkpoint in vars.Checkpoints)
+    //foreach (KeyValuePair<string, int> checkpoint in vars.Checkpoints)
+    //{
+        //if( settings[checkpoint.Key] && (current.Checkpoint != old.Checkpoint) && current.Checkpoint == checkpoint.Value ){
+            //return true;
+        //}
+    //}
+    if(current.Checkpoint != old.Checkpoint )
     {
-        if( settings[checkpoint.Key] && (current.Checkpoint != old.Checkpoint) && current.Checkpoint == checkpoint.Value ){
+        foreach (KeyValuePair<string, int> checkpoint in vars.Checkpoints)
+        {
+            if( settings[checkpoint.Key] && current.Checkpoint == checkpoint.Value ){
             return true;
+            }
         }
     }
     if( current.checkpoint == 8638 && (current.gameStates == 5 && old.gameStates == 9 || current.gameStates == 4 && old.gameStates ==  8) && settings["A Way Out"]){
