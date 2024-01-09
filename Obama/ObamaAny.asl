@@ -52,7 +52,7 @@ split
     {
         foreach (KeyValuePair<string, int> Checkpoints in vars.Checkpoints)
         {
-            if( settings[Checkpoints.Key] && current.checkpoint == Checkpoints.Value && old.checkpoint != current.checkpoint ){
+            if(settings[Checkpoints.Key] && current.checkpoint == Checkpoints.Value){
                 return true;
             }
         }
